@@ -8,6 +8,8 @@ on:
 jobs:
   deploy-to-github-pages:
     # use ubuntu-latest image to run steps on
+    permissions:
+      contents: write
     runs-on: ubuntu-latest
     steps:
       # uses GitHub's checkout action to checkout code from the main branch
