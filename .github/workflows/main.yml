@@ -1,3 +1,5 @@
+# Obtained from https://swimburger.net/blog/dotnet/how-to-deploy-aspnet-blazor-webassembly-to-github-pages
+# Modified to suit this deployment, all credit goes to the yaml original creator
 name: Deploy to GitHub Pages
 
 # Run workflow on every push to the main branch
@@ -24,6 +26,10 @@ jobs:
       # publishes Blazor project to the release-folder
       - name: Publish .NET Core Project
         run: dotnet publish portfolio.csproj -c Release -o release --nologo
+
+      # changes the base-tag in index.html from '/' to 'portfolio' to match GitHub Pages repository subdirectory
+      - name: Change base-tag in index.html from / to portfolio
+        run: sed -i 's/<base href="\/" \/>/<base href="\/portfolio\/" \/>/g' release/wwwroot/index.html
 
       - name: Commit wwwroot to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
